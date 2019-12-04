@@ -21,8 +21,9 @@ class MainActivity : AppCompatActivity() {
             //doWork2()
             //doWork3()
             //doWork4()
-            //doWork5()
-            doWork6()
+            Log.i(TAG, "1) thread id :" + Thread.currentThread().id)
+            doWork5()
+            //doWork6()
         }
 
     }
@@ -71,19 +72,23 @@ class MainActivity : AppCompatActivity() {
 
     // 또 다른 coroutine scope 생성하기.
     fun doWork5() = runBlocking {
+        Log.i(TAG, "2) thread id :" + Thread.currentThread().id)
         launch {
-            delay(1000L)
-            Log.i(TAG, "(1) Task from runBlocking")
+            Log.i(TAG, "3) thread id :" + Thread.currentThread().id)
+            //delay(1000L)
+            //Log.i(TAG, "(1) Task from runBlocking")
         }
-        coroutineScope {
+        runBlocking {
+            Log.i(TAG, "4) thread id :" + Thread.currentThread().id)
             launch {
-                delay(5000L)
-                Log.i(TAG, "(3) Task from nested launch")
+                Log.i(TAG, "5) thread id :" + Thread.currentThread().id)
+                //delay(5000L)
+                //Log.i(TAG, "(3) Task from nested launch")
             }
-            delay(2000L)
-            Log.i(TAG, "(2) Task from coroutine scope")
+            //delay(2000L)
+            //Log.i(TAG, "(2) Task from coroutine scope")
         }
-        Log.i(TAG, "(4) Coroutine scope is over")
+        //Log.i(TAG, "(4) Coroutine scope is over")
     }
 
     // suspend fun 구현. 내부적으로 suspending function을 사용할 수 있음. (ex : delay, coroutineScope)
